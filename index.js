@@ -50,4 +50,3 @@ t3 = new Deposit(120.00, myAccount);
 t3.commit();
 console.log('Transaction 3:', t3);
 
-console.log('Balance:', Account.balance);
