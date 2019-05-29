@@ -2,7 +2,19 @@ class Account {
 
   constructor(username) {
     this.username = username;
-    this.balance = 0;
+    this.transaction = [];
+  }
+
+  get balance() {
+    let balance = 0;
+    for(let t of this.transaction) {
+      balance += t.value;
+    }
+    return balance;
+  }
+
+  addTransaction(transaction) {
+    this.transaction.push(transaction);
   }
 }
 
@@ -14,7 +26,8 @@ class Transaction {
   }
 
   commit() {
-    this.account.balance += this.value;
+    this.time = new Date();
+    this.account.addTransaction(this);
   }
 
 }
@@ -44,4 +57,10 @@ const myAccount = new Account("billybob");
 
 console.log('Starting Balance:', myAccount.balance);
 
+const t1 = new Deposit(120.00, myAccount);
+t1.commit();
 
+const t2 = new Withdrawal(50.00, myAccount);
+t2.commit();
+
+console.log('Ending Balance:', myAccount.balance);
